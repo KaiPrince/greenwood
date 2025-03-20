@@ -34,7 +34,7 @@ class StandardHtmlResource {
     const isSpaRoute = this.compilation.graph.find((node) => node.isSPA);
     const matchingRoute = this.compilation.graph.find((node) => node.route === pathname) || {};
     const { pageHref } = matchingRoute;
-    const initContents = (await response.text()) ?? "";
+    const initContents = (await response?.text()) ?? "";
     let body = "";
     let layout = matchingRoute.layout || null;
     let customImports = matchingRoute.imports || [];
