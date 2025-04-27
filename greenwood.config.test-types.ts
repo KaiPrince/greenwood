@@ -60,7 +60,13 @@ const config: Config = {
     greenwoodPluginImportRaw,
     greenwoodPluginIncludeHTML(),
     greenwoodPluginMarkdown({
-      plugins: ["@mapbox/rehype-prism", "rehype-slug", "rehype-autolink-headings", "remark-github"],
+      plugins: [
+        "@mapbox/rehype-prism",
+        {
+          name: "rehype-autolink-headings",
+          options: { behavior: "append" },
+        },
+      ],
     }),
     greenwoodPluginPolyfills(),
     greenwoodPluginPostCss(),
