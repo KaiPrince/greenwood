@@ -91,27 +91,6 @@ class StandardHtmlResource {
     body = await getAppLayout(body, this.compilation, customImports, matchingRoute);
     body = await getUserScripts(body, this.compilation);
 
-    // TODO
-    // if (processedMarkdown) {
-    //   const wrappedCustomElementRegex =
-    //     /<p><[a-zA-Z]*-[a-zA-Z](.*)>(.*)<\/[a-zA-Z]*-[a-zA-Z](.*)><\/p>/g;
-    //   const ceTest = wrappedCustomElementRegex.test(processedMarkdown.value);
-
-    //   if (ceTest) {
-    //     const ceMatches = processedMarkdown.value.match(wrappedCustomElementRegex);
-
-    //     ceMatches.forEach((match) => {
-    //       const stripWrappingTags = match.replace("<p>", "").replace("</p>", "");
-
-    //       processedMarkdown.value = processedMarkdown.value.replace(match, stripWrappingTags);
-    //     });
-    //   }
-
-    //   // https://github.com/ProjectEvergreen/greenwood/issues/1126
-    //   body = body.replace(
-    //     /<content-outlet>(.*)<\/content-outlet>/s,
-    //     processedMarkdown.value.replace(/\$/g, "$$$"),
-    //   );
     if (matchingRoute.external) {
       body = body.replace(/<content-outlet>(.*)<\/content-outlet>/s, matchingRoute.body);
     } else if (ssrBody) {
