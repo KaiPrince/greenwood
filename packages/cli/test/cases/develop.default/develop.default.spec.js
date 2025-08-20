@@ -471,7 +471,9 @@ describe("Develop Greenwood With: ", function () {
       let body;
 
       before(async function () {
-        response = await fetch(`${hostname}:${port}/assets/song-sample.mp3`);
+        response = await fetch(`${hostname}:${port}/assets/song-sample.mp3`).catch((err) => {
+          console.error("Error fetching song-sample.mp3:", err);
+        });
         body = await response.clone().text();
       });
 
@@ -491,6 +493,7 @@ describe("Develop Greenwood With: ", function () {
       });
 
       it("should return the correct response body", function (done) {
+        console.log("Response body:", body);
         expect(body).to.contain("ID3");
         done();
       });
