@@ -65,19 +65,23 @@ async function getDevServer(compilation) {
       const request = transformKoaRequestIntoStandardRequest(url, ctx.request);
       // intentionally ignore initial statusText to avoid false positives from 404s
       let response = new Response(null, { status });
+      const debugResponses = [];
 
       for (const plugin of resourcePlugins) {
         if (plugin.shouldServe && (await plugin.shouldServe(url, request))) {
           const current = await plugin.serve(url, request);
 
           try {
+            debugResponses.push(response.clone());
             response.clone();
           } catch (e) {
             console.error(
               "response clone err",
               e,
-              JSON.stringify(response, null, 2),
-              JSON.stringify(plugin, null, 2),
+              debugResponses.map((r, i) =>
+                r.text().then((b) => console.log(`response ${i} body`, b)),
+              ),
+              plugin.name,
             );
           }
 
