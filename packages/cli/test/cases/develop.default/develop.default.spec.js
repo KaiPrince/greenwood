@@ -68,7 +68,7 @@ describe("Develop Greenwood With: ", function () {
     this.context = {
       hostname: `${hostname}:${port}`,
     };
-    runner = new Runner();
+    runner = new Runner(true);
   });
 
   describe(LABEL, function () {
@@ -466,7 +466,7 @@ describe("Develop Greenwood With: ", function () {
       });
     });
 
-    describe("Develop command with audio format (.mp3) behavior", function () {
+    describe.only("Develop command with audio format (.mp3) behavior", function () {
       let response = {};
       let body;
 
