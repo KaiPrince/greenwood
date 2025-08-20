@@ -39,7 +39,7 @@ jobs:
         uses: actions/cache@v4
         with:
           path: "**/node_modules"
-          key: ${{ runner.os }}-${{ hashFiles('**/yarn.lock') }}
+          key: ${{ runner.os }}-${{matrix.node}}-${{ hashFiles('**/yarn.lock') }}
       - name: Installing project dependencies
         run: |
           yarn install --frozen-lockfile && yarn lerna bootstrap
