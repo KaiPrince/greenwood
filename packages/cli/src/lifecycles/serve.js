@@ -71,9 +71,9 @@ async function getDevServer(compilation) {
           const current = await plugin.serve(url, request);
 
           try {
-            current.clone();
+            response.clone();
           } catch (e) {
-            console.error(e, JSON.stringify(plugin, null, 2));
+            console.error("response clone err", e, JSON.stringify(plugin, null, 2));
           }
 
           response = mergeResponse(response.clone(), current.clone());
