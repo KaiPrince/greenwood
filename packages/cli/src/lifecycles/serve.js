@@ -70,6 +70,12 @@ async function getDevServer(compilation) {
         if (plugin.shouldServe && (await plugin.shouldServe(url, request))) {
           const current = await plugin.serve(url, request);
 
+          try {
+            current.clone();
+          } catch (e) {
+            console.error(e, JSON.stringify(plugin, null, 2));
+          }
+
           response = mergeResponse(response.clone(), current.clone());
         }
       }
