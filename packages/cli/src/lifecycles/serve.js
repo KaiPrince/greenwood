@@ -73,7 +73,12 @@ async function getDevServer(compilation) {
           try {
             response.clone();
           } catch (e) {
-            console.error("response clone err", e, JSON.stringify(plugin, null, 2));
+            console.error(
+              "response clone err",
+              e,
+              JSON.stringify(response, null, 2),
+              JSON.stringify(plugin, null, 2),
+            );
           }
 
           response = mergeResponse(response.clone(), current.clone());
