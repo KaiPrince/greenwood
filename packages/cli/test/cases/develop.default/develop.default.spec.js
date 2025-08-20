@@ -466,8 +466,7 @@ describe("Develop Greenwood With: ", function () {
       });
     });
 
-    // eslint-disable-next-line no-only-tests/no-only-tests
-    describe.only("Develop command with audio format (.mp3) behavior", function () {
+    describe("Develop command with audio format (.mp3) behavior", function () {
       let response = {};
       let body;
 
