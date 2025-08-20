@@ -6,7 +6,7 @@ export default async function (compilation, callback) {
 
   const runBrowser = async (serverUrl, pages) => {
     try {
-      return asyncMap(pages, async (page) => {
+      return await asyncMap(pages, async (page) => {
         const { route } = page;
         console.info("prerendering page...", route);
 

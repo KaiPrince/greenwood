@@ -39,7 +39,7 @@ async function copyDirectory(fromUrl, toUrl, projectDirectory) {
         });
       }
 
-      asyncForEach(files, async (fileUrl) => {
+      await asyncForEach(files, async (fileUrl) => {
         const targetUrl = new URL(
           `file://${fileUrl.pathname.replace(fromUrl.pathname, toUrl.pathname)}`,
         );
@@ -63,10 +63,10 @@ const copyAssets = async (compilation) => {
   const copyPlugins = compilation.config.plugins.filter((plugin) => plugin.type === "copy");
   const { projectDirectory } = compilation.context;
 
-  asyncForEach(copyPlugins, async (plugin) => {
+  await asyncForEach(copyPlugins, async (plugin) => {
     const locations = await plugin.provider(compilation);
 
-    asyncForEach(locations, async (location) => {
+    await asyncForEach(locations, async (location) => {
       const { from, to } = location;
 
       if (from.pathname.endsWith("/")) {
