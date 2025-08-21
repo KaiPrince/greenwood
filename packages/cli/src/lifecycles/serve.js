@@ -84,7 +84,7 @@ async function getDevServer(compilation) {
             );
           }
 
-          response = mergeResponse(response.clone(), current.clone());
+          response = mergeResponse(response.clone(), current.clone()).clone();
         }
       }
 
