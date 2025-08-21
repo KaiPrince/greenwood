@@ -66,16 +66,20 @@ async function getDevServer(compilation) {
       // intentionally ignore initial statusText to avoid false positives from 404s
       let response = new Response(null, { status });
       const debugResponses = [];
+      const debugPluginNames = [];
+      let wasUsed = null;
 
       for (const plugin of resourcePlugins) {
         if (plugin.shouldServe && (await plugin.shouldServe(url, request.clone()))) {
           const current = await plugin.serve(url, request.clone());
 
           try {
+            wasUsed = response.bodyUsed;
             debugResponses.push(response.clone());
-            response.clone();
+            debugPluginNames.push(plugin.constructor.name);
           } catch (e) {
-            console.error("response clone err", e, plugin.constructor.name);
+            console.error("response clone err", e, debugPluginNames);
+            console.error("wasUsed", wasUsed);
             debugResponses.map((r, i) =>
               r.text().then((b) => console.log(`response ${i} body`, b)),
             );
