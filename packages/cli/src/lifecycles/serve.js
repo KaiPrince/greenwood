@@ -68,20 +68,16 @@ async function getDevServer(compilation) {
       const debugResponses = [];
 
       for (const plugin of resourcePlugins) {
-        if (plugin.shouldServe && (await plugin.shouldServe(url, request))) {
-          const current = await plugin.serve(url, request);
+        if (plugin.shouldServe && (await plugin.shouldServe(url, request.clone()))) {
+          const current = await plugin.serve(url, request.clone());
 
           try {
             debugResponses.push(response.clone());
             response.clone();
           } catch (e) {
-            console.error(
-              "response clone err",
-              e,
-              debugResponses.map((r, i) =>
-                r.text().then((b) => console.log(`response ${i} body`, b)),
-              ),
-              plugin.name,
+            console.error("response clone err", e, plugin.constructor.name);
+            debugResponses.map((r, i) =>
+              r.text().then((b) => console.log(`response ${i} body`, b)),
             );
           }
 
