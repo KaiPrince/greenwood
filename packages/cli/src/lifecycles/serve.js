@@ -67,19 +67,18 @@ async function getDevServer(compilation) {
       let response = new Response(null, { status });
       const debugResponses = [];
       const debugPluginNames = [];
-      let wasUsed = null;
+      const debugWasUsed = [];
 
       for (const plugin of resourcePlugins) {
         if (plugin.shouldServe && (await plugin.shouldServe(url, request.clone()))) {
           const current = await plugin.serve(url, request.clone());
 
           try {
-            wasUsed = response.bodyUsed;
-            debugResponses.push(response.clone());
+            debugWasUsed.push(response.bodyUsed);
             debugPluginNames.push(plugin.constructor.name);
+            debugResponses.push(response.clone());
           } catch (e) {
-            console.error("response clone err", e, debugPluginNames);
-            console.error("wasUsed", wasUsed);
+            console.error("response clone err", e, debugWasUsed, debugPluginNames);
             debugResponses.map((r, i) =>
               r.text().then((b) => console.log(`response ${i} body`, b)),
             );
@@ -97,6 +96,9 @@ async function getDevServer(compilation) {
       });
     } catch (e) {
       ctx.status = 500;
+      if (String(e).includes("Response.clone")) {
+        ctx.body = String(e);
+      }
       console.error(e);
     }
 
