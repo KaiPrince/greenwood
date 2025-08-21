@@ -493,7 +493,6 @@ describe("Develop Greenwood With: ", function () {
       });
 
       it("should return the correct response body", function (done) {
-        console.log("Response body:", body);
         expect(body).to.contain("ID3");
         done();
       });
